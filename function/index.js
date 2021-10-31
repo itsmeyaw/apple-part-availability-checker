@@ -6,7 +6,13 @@ aws.config.update({region: "eu-central-1"});
 exports.handler = async (event) => {
     return new Promise((resolve, reject) => {
         https.get(`https://www.apple.com/de/shop/fulfillment-messages?parts.0=${process.env.part_code}%2FA&location=${process.env.postal_code}`, (res) => {
-            res.on("data", (data) => {
+            let data = "";
+
+            res.on("data", (dataChunks) => {
+                data += dataChunks;
+            })
+
+            res.on("end", () => {
                 console.log("Got data with: ", data);
                 if (data.head.status !== undefined && data.head.status === 200) {
                     const stores = data.body.content.pickupMessage.stores
