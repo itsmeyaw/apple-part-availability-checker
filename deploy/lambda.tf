@@ -8,7 +8,7 @@ resource "aws_lambda_function" "apple-notifier" {
   function_name    = "${var.project_name}-notifier"
   role             = aws_iam_role.lambda_function_iam.arn
   source_code_hash = data.archive_file.lambda-function-zip.output_base64sha256
-  filename         = data.archive_file.lambda-function-zip.name
+  filename         = "../build/function.zip"
   timeout          = 1
   runtime          = "nodejs14.x"
   handler          = "index.handler"
