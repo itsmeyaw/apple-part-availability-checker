@@ -1,0 +1,35 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": "events:*",
+      "Resource": "*",
+      "Condition": {
+        "StringEquals": {
+          "aws:RequestTag/Project": "apple-part-availability-checker"
+        }
+      }
+    },
+    {
+      "Effect": "Allow",
+      "Action": "iam:*",
+      "Resource": "*",
+      "Condition": {
+        "StringEqualsIfExists": {
+          "aws:RequestTag/Project": "apple-part-availability-checker"
+        }
+      }
+    },
+    {
+      "Effect": "Allow",
+      "Action": "lambda:*",
+      "Resource": "*",
+      "Condition": {
+        "StringEqualsIfExists": {
+          "aws:RequestTag/Project": "apple-part-availability-checker"
+        }
+      }
+    }
+  ]
+}
