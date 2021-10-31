@@ -5,7 +5,7 @@ data "archive_file" "lambda-function-zip" {
 }
 
 resource "aws_lambda_function" "apple-notifier" {
-  provider         = "aws"
+  provider         = aws
   function_name    = "${var.project_name}-notifier"
   role             = aws_iam_role.lambda_function_iam.arn
   source_code_hash = data.archive_file.lambda-function-zip.output_base64sha256
