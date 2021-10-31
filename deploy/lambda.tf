@@ -9,7 +9,7 @@ resource "aws_lambda_function" "apple-notifier" {
   role             = aws_iam_role.lambda_function_iam.arn
   source_code_hash = data.archive_file.lambda-function-zip.output_base64sha256
   filename         = "../build/function.zip"
-  timeout          = 1
+  timeout          = 3
   runtime          = "nodejs14.x"
   handler          = "index.handler"
   depends_on       = [data.archive_file.lambda-function-zip]
