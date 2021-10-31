@@ -12,6 +12,7 @@ resource "aws_lambda_function" "apple-notifier" {
   timeout          = "1"
   runtime          = "nodejs"
   handler          = "index.handler"
+  depends_on       = [data.archive_file.lambda-function-zip]
   environment {
     variables = {
       email_from  = var.notifier_email
