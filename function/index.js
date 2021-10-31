@@ -1,7 +1,7 @@
 const aws = require("aws-sdk")
 const https = require("https")
 
-AWS.config.update({region: "eu-central-1"});
+aws.config.update({region: "eu-central-1"});
 
 exports.handler = async (event) => {
     return new Promise((resolve, reject) => {
