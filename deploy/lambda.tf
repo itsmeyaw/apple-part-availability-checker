@@ -1,15 +1,16 @@
 data "archive_file" "lambda-function-zip" {
   type        = "zip"
-  source_dir = "../function"
+  source_dir  = "../function"
   output_path = "../build/function.zip"
 }
 
 resource "aws_lambda_function" "apple-notifier" {
+  provider         = "aws"
   function_name    = "${var.project_name}-notifier"
   role             = aws_iam_role.lambda_function_iam.arn
-  source_code_hash = filebase64sha256("../build/function.zip")
+  source_code_hash = data.archive_file.lambda-function-zip.output_base64sha256
   filename         = "../build/function.zip"
-  timeout          = "1"
+  timeout          = 1
   runtime          = "nodejs"
   handler          = "index.handler"
   depends_on       = [data.archive_file.lambda-function-zip]
