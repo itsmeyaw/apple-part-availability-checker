@@ -30,7 +30,8 @@ exports.handler = async (event) => {
                             ).forEach(store => {
                                 if (store.partsAvailability !== undefined) {
                                     Object.keys(store.partsAvailability).filter(part =>
-                                        part.pickupDisplay !== "unavailable" && !part.storePickupQuote.includes("gegenwärtig nicht verfügbar")
+                                        part.pickupDisplay !== "unavailable" &&
+                                        (part.storePickupQuote === undefined || !part.storePickupQuote.includes("gegenwärtig nicht verfügbar"))
                                     ).forEach(_ => {
                                         available = true;
                                         const retailStore = store.retailStore;
