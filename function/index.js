@@ -13,7 +13,10 @@ exports.handler = async (event) => {
             })
 
             res.on("end", () => {
-                console.log("Got data with: ", data);
+                console.log("Got data with: \n", data);
+
+                data = JSON.parse(data);
+
                 if (data.head.status !== undefined && data.head.status === 200) {
                     const stores = data.body.content.pickupMessage.stores
                     if (stores !== undefined) {
