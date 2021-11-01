@@ -73,7 +73,7 @@ exports.handler = async (event) => {
                                     Destination: {
                                         ToAddresses: JSON.parse(process.env.emails_to)
                                     },
-                                    Messages: {
+                                    Message: {
                                         Subject: {
                                             Charset: "UTF-8",
                                             Data: "Availability Found!"
