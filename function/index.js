@@ -40,9 +40,12 @@ exports.handler = async (event) => {
                                             + "\nGo make reservation at: " + store.reservationUrl
                                             + "\nThe store address is: ";
 
-                                        Object.keys(store.address).sort().forEach(key => {
-                                            message += "\n\t" + store.address[key]
-                                        });
+                                        Object.keys(store.address)
+                                            .sort()
+                                            .filter(key => store.address[key] !== null)
+                                            .forEach(key => {
+                                                message += "\n\t" + store.address[key]
+                                            });
 
                                         message += "\nAnd the store is opened on:";
                                         retailStore.storeHours.forEach(storeHour => {
