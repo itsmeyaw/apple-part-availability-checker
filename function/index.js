@@ -28,36 +28,38 @@ exports.handler = async (event) => {
                                 process.env.city === undefined ||
                                 (process.env.city === store.retailStore.address.city)
                             ).forEach(store => {
-                                if (store.partsAvailability !== undefined &&
-                                    store.partsAvailability[0].pickupDisplay !== "unavailable" &&
-                                    !store.partsAvailability[0].storePickupQuote.include("gegenwärtig nicht verfügbar")) {
-                                    available = true;
-                                    const retailStore = store.retailStore;
+                                if (store.partsAvailability !== undefined) {
+                                    Object.keys(store.partsAvailability).filter(part =>
+                                        part.pickupDisplay !== "unavailable" && !part.storePickupQuote.include("gegenwärtig nicht verfügbar")
+                                    ).forEach(_ => {
+                                        available = true;
+                                        const retailStore = store.retailStore;
 
-                                    message += "\n" + retailStore.address.companyName
-                                        + "\nGo make reservation at: " + store.reservationUrl
-                                        + "\nThe store address is: ";
+                                        message += "\n" + retailStore.address.companyName
+                                            + "\nGo make reservation at: " + store.reservationUrl
+                                            + "\nThe store address is: ";
 
-                                    Object.keys(store.address).sort().forEach(key => {
-                                        message += "\n\t" + store.address["key"]
-                                    });
-
-                                    message += "\nAnd the store is opened on:";
-                                    retailStore.storeHours.forEach(storeHour => {
-                                        message += `\n\t ${storeHour.storeDays}: ${storeHour.storeTimings}`;
-                                    });
-
-                                    if (retailStore.storeHolidays !== undefined && retailStore.storeHolidays.length > 0) {
-                                        message += "\nWith caveats holidays: ";
-                                        retailStore.storeHolidays.filter(storeHoliday => storeHoliday.closed).forEach(storeHoliday => {
-                                            message += `\n\t[${storeHoliday.description}] Date: ${storeHoliday.date} (${storeHoliday.comments})`;
-                                            if (storeHoliday.hours !== null) {
-                                                message += `Hours: ${storeHoliday.hours}`;
-                                            }
+                                        Object.keys(store.address).sort().forEach(key => {
+                                            message += "\n\t" + store.address["key"]
                                         });
-                                    }
 
-                                    message += "\n";
+                                        message += "\nAnd the store is opened on:";
+                                        retailStore.storeHours.forEach(storeHour => {
+                                            message += `\n\t ${storeHour.storeDays}: ${storeHour.storeTimings}`;
+                                        });
+
+                                        if (retailStore.storeHolidays !== undefined && retailStore.storeHolidays.length > 0) {
+                                            message += "\nWith caveats holidays: ";
+                                            retailStore.storeHolidays.filter(storeHoliday => storeHoliday.closed).forEach(storeHoliday => {
+                                                message += `\n\t[${storeHoliday.description}] Date: ${storeHoliday.date} (${storeHoliday.comments})`;
+                                                if (storeHoliday.hours !== null) {
+                                                    message += `Hours: ${storeHoliday.hours}`;
+                                                }
+                                            });
+                                        }
+
+                                        message += "\n";
+                                    })
                                 } else {
                                     console.log(`Item is not available in store Apple ` + store.storeName.replaceAll(" ", ""));
                                 }
@@ -68,7 +70,7 @@ exports.handler = async (event) => {
 
                                 const params = {
                                     Destination: {
-                                        ToAddresses: JSON.encode(process.env.emails_to)
+                                        ToAddresses: JSON.parse(process.env.emails_to)
                                     },
                                     Messages: {
                                         Subject: {
