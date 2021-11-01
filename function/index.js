@@ -17,7 +17,7 @@ exports.handler = async (event) => {
 
                 const dataJson = JSON.parse(data);
 
-                if (dataJson.head.status !== undefined && dataJson.head.status === 200) {
+                if (dataJson.head.status !== undefined && dataJson.head.status === "200") {
                     const stores = dataJson.body.content.pickupMessage.stores
                     if (stores !== undefined) {
                         if (stores.length > 0) {
