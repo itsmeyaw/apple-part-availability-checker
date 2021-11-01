@@ -5,7 +5,7 @@ aws.config.update({region: "eu-central-1"});
 
 exports.handler = async (event) => {
     return new Promise((resolve, reject) => {
-        https.get(`https://www.apple.com/de/shop/fulfillment-messages?parts.0=${process.env.part_code}%2FA&location=${process.env.postal_code}`, (res) => {
+        https.get(`https://www.apple.com/de/shop/fulfillment-messages?parts.0=${process.env.part_code}&location=${process.env.postal_code}`, (res) => {
             let data = "";
 
             res.on("data", (dataChunks) => {
