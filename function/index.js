@@ -102,7 +102,7 @@ exports.handler = async (event) => {
                         console.error("Stores data is not given by apple server.");
                     }
                 } else {
-                    reject("Got error while fetching with message ");
+                    reject("Got error while fetching with message ", dataJson.head);
                 }
             })
         }).on("error", (e) => {
