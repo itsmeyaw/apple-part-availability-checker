@@ -8,5 +8,5 @@ A lambda code (for AWS) that check periodically for availability of an Apple par
 4. Make a new IAM user with programmatic access and attach the previously made iam policy to it
 5. Set the variables needed for terraforming
 
-##Notes
+## Notes
 - The IAM Policy JSON is however insecure and should not used in a high productive account
