@@ -41,7 +41,7 @@ exports.handler = async (event) => {
                                             + "\nThe store address is: ";
 
                                         Object.keys(store.address).sort().forEach(key => {
-                                            message += "\n\t" + store.address["key"]
+                                            message += "\n\t" + store.address[key]
                                         });
 
                                         message += "\nAnd the store is opened on:";
