@@ -74,3 +74,8 @@ resource "aws_iam_role_policy_attachment" "ses_attachment_lambda" {
   policy_arn = aws_iam_policy.ses_policy.arn
   role       = aws_iam_role.lambda_function_iam.name
 }
+
+resource "aws_iam_role_policy_attachment" "cloudwatch_attachment_lambda" {
+  policy_arn = "arn:aws:iam::aws:policy/CloudWatchFullAccess"
+  role       = aws_iam_role.lambda_function_iam.name
+}
